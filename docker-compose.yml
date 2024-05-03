@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: ${APP_NAME}_db
+    image: postgres:16.1
+    restart: always
+    env_file:
+      - stack.env
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ 'CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}' ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - hosty-net
+
+  redis:
+    container_name: ${APP_NAME}_redis
+    image: redis:${REDIS_VERSION}
+    restart: always
+    env_file:
+      - stack.env
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - hosty-net
+
+  api:
+    container_name: ${APP_NAME}_api
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}
+    restart: always
+    env_file:
+      - stack.env
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/docs"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - hosty-net
+
+  nginx:
+    container_name: ${APP_NAME}_nginx
+    image: nginx:1.22.1
+    restart: always
+    healthcheck:
+      test: curl -sS http://127.0.0.1:443 || echo 1
+      interval: 5s
+      timeout: 10s
+      retries: 3
+    ports:
+      - 80:80
+      - 443:443
+    env_file:
+      - stack.env
+    volumes:
+      - '/home/ubuntu/hosty/nginx/config/hosty.conf:/etc/nginx/conf.d/default.conf:ro'
+      - '/home/ubuntu/hosty/nginx/live:/etc/nginx/certs:ro'
+      - '/var/www/hosty_travel:/var/www/hosty_travel'
+    networks:
+      - hosty-net
+
+  certbot:
+      container_name: ${APP_NAME}_certbot
+      image: certbot/certbot:v2.9.0
+      volumes:
+          - '/home/ubuntu/hosty/nginx/certs:/etc/letsencrypt'
+      entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+      networks:
+        - hosty-net
+    
+volumes:
+  db_data: {}
+  redis_data: {}
+
+networks:
+  hosty-net:

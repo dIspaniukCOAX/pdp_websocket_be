@@ -1,0 +1,8 @@
+# https://github.com/actions/labeler
+changelog_unchanged:
+  - all: ["!CHANGELOG.md"]
+no_tests:
+  - all: [
+    "!test/*.ts", "!test/", "!test/**/*.ts", "!test/**/**/*.ts", "!test/**/**/**/*.ts", "!test/**/**/**/**/*.ts",
+    "!**/*.spec.ts"
+  ]

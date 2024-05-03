@@ -1,0 +1,61 @@
+import { Repository } from 'typeorm';
+
+type MockType<T> = {
+  [P in keyof T]?: jest.Mock<unknown>;
+};
+
+export const getRepositoryMockFactory: (
+  entityClass?: any,
+) => () => MockType<Repository<any>> = () =>
+  jest.fn(() => ({
+    findOne: jest.fn((params) => params),
+    findOneBy: jest.fn((params) => params),
+    findBy: jest.fn((params) => params),
+    save: jest.fn((entity) => entity),
+    find: jest.fn((params) => params),
+    delete: jest.fn((params) => params),
+    update: jest.fn((params) => params),
+    findAndCount: jest.fn((params) => [params]),
+    createQueryBuilder: jest.fn(() => ({
+      addSelect: jest.fn().mockReturnThis(),
+      select: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
+      orWhere: jest.fn().mockReturnThis(),
+      getOne: jest.fn().mockReturnThis(),
+      innerJoin: jest.fn().mockReturnThis(),
+      leftJoin: jest.fn().mockReturnThis(),
+      setParameters: jest.fn().mockReturnThis(),
+      offset: jest.fn().mockReturnThis(),
+      limit: jest.fn().mockReturnThis(),
+      getRawMany: jest.fn().mockReturnThis(),
+      getCount: jest.fn().mockReturnThis(),
+      getManyAndCount: jest.fn().mockReturnThis(),
+      orderBy: jest.fn().mockReturnThis(),
+      getMany: jest.fn((params) => [params]),
+      leftJoinAndSelect: jest.fn().mockReturnThis(),
+      take: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      leftJoinAndMapOne: jest.fn().mockReturnThis(),
+      innerJoinAndSelect: jest.fn().mockReturnThis(),
+      leftJoinAndMapMany: jest.fn().mockReturnThis(),
+      groupBy: jest.fn().mockReturnThis(),
+      subQuery: jest.fn().mockReturnThis(),
+      from: jest.fn().mockReturnThis(),
+      getQuery: jest.fn().mockReturnThis(),
+      clone: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
+      getRawOne: jest.fn().mockReturnThis(),
+      innerJoinAndMapOne: jest.fn().mockReturnThis(),
+      distinct: jest.fn().mockReturnThis(),
+      distinctOn: jest.fn().mockReturnThis(),
+      update: jest.fn().mockReturnThis(),
+      set: jest.fn().mockReturnThis(),
+      execute: jest.fn().mockReturnThis(),
+    })),
+    remove: jest.fn().mockReturnThis(),
+    orderBy: jest.fn().mockReturnThis(),
+    count: jest.fn().mockReturnThis(),
+    countBy: jest.fn().mockReturnThis(),
+    upsert: jest.fn().mockReturnThis(),
+  }));

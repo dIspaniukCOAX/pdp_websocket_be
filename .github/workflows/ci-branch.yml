@@ -1,0 +1,46 @@
+name: Analyze Branch
+
+# define which branches should be analysed
+on:
+  push:
+    branches:
+      - dev
+      # - staging
+      # - production
+
+jobs:
+  build:
+    runs-on: [self-hosted, coax]
+    steps:
+      - name: 'Checkout repository on branch: ${{ github.REF }}'
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.REF }}
+          fetch-depth: 0
+      - name: Extract branch name
+        shell: bash
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+        id: extract_branch
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Define Node version
+      - name: Install packages
+        run: npm ci
+      - name: Run Linter
+        run: npm run lint:cov
+      - name: Run Tests
+        env:
+          NODE_OPTIONS: "--max_old_space_size=3072"
+        run: npm run test:cov
+      - name: Setup SonarQubeRunner
+        uses: warchant/setup-sonar-scanner@v4
+      - name: Analyze with SonarQube
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: sonar-scanner
+          -Dsonar.host.url=${{ secrets.SONAR_URL }}
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.projectKey=${{ github.event.repository.name }}
+          -Dsonar.scm.provider=git
+          -Dsonar.branch.name=${BRANCH_NAME}
