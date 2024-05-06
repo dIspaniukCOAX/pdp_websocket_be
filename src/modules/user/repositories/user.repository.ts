@@ -38,4 +38,18 @@ export class UserRepository {
       where: params,
     });
   }
+
+  public async updateBalanceUserById(
+    userId: number,
+    params: Partial<User>,
+  ): Promise<User> {
+    const user = await this.repository.findOneBy({ id: userId });
+    const balance = user.balance + params.balance;
+
+    await this.repository.update(userId, {
+      balance
+    });
+
+    return this.repository.findOneBy({ id: userId });
+  }
 }

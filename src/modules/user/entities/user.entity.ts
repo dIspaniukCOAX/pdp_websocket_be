@@ -20,6 +20,10 @@ export class User extends BaseEntity {
   fullName: string;
 
   @ApiProperty()
+  @Column({ type: 'float', nullable: false })
+  balance: number;
+
+  @ApiProperty()
   @Column({ type: 'boolean', nullable: true })
   isEmailConfirmed: boolean;
 

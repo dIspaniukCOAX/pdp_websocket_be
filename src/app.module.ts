@@ -11,6 +11,8 @@ import { JwtAuthGuard } from './modules/auth/guards/auth.guard';
 import { CacheModule } from './modules/cache/cache.module';
 import { UserModule } from './modules/user/user.module';
 import { EmailModule } from './modules/email/email.module';
+import { BikesModule } from 'modules/bikes/bikes.module';
+import { StripeModule } from './modules/stripe/stripe.module';
 
 @Module({
   imports: [
@@ -36,6 +38,8 @@ import { EmailModule } from './modules/email/email.module';
     AuthModule,
     EmailModule,
     CacheModule,
+    BikesModule,
+    StripeModule,
   ],
   providers: [
     {

@@ -57,4 +57,13 @@ export class UserService {
   public async findUserById(userId: number): Promise<User> {
     return this.userRepository.findUserById(userId);
   }
+
+  public async updateBalanceUserById(
+    userId: number,
+    params: Partial<User>,
+  ): Promise<User> {
+    const user = await this.userRepository.updateBalanceUserById(userId, params);
+
+    return user;
+  }
 }
