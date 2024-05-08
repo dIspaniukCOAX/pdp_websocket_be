@@ -58,6 +58,10 @@ export class UserService {
     return this.userRepository.findUserById(userId);
   }
 
+  async decreaseBalance(userId: number, amount: number): Promise<void> {
+    await this.userRepository.decrementBalance(userId, amount);
+  }
+
   public async updateBalanceUserById(
     userId: number,
     params: Partial<User>,

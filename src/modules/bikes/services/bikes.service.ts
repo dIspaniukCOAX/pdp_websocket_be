@@ -22,7 +22,7 @@ export class BikesService {
     return bikes;
   }
 
-  async findById(id: number): Promise<Bikes> {
+  async findOneById(id: number): Promise<Bikes> {
     const bike = await this.bikesRepository.findOneById(id);
 
     if (!bike) {
@@ -33,13 +33,13 @@ export class BikesService {
   }
 
   async updateBike(id: number, dto: UpdateBikesDto): Promise<Bikes> {
-    await this.findById(id);
-    await this.bikesRepository.updateByIdAndFind(id, dto);
-    return this.findById(id);
+    await this.findOneById(id);
+    await this.bikesRepository.update(id, dto);
+    return this.findOneById(id);
   }
 
   public async deleteBikeById(id: number): Promise<void> {
-    await this.findById(id);
+    await this.findOneById(id);
 
     await this.bikesRepository.deleteById(id);
   }

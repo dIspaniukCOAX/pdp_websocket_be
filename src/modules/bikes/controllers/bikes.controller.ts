@@ -48,7 +48,7 @@ export class BikesController {
     @Param('id', ParseIntPipe) id: number,
   ): Promise<BikesDto> {
     const bike =
-      await this.bikesService.findById(id);
+      await this.bikesService.findOneById(id);
 
     return this.bikesTransformer.transform(bike);
   }

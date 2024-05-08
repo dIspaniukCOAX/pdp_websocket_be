@@ -13,6 +13,7 @@ import { UserModule } from './modules/user/user.module';
 import { EmailModule } from './modules/email/email.module';
 import { BikesModule } from 'modules/bikes/bikes.module';
 import { StripeModule } from './modules/stripe/stripe.module';
+import { TransactionModule } from './modules/transaction/transaction.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { StripeModule } from './modules/stripe/stripe.module';
     CacheModule,
     BikesModule,
     StripeModule,
+    TransactionModule,
   ],
   providers: [
     {

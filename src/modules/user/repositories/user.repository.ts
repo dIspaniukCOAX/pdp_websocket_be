@@ -39,6 +39,10 @@ export class UserRepository {
     });
   }
 
+  public async decrementBalance(userId: number, amount: number): Promise<void> {
+    await this.repository.decrement({ id: userId }, 'balance', amount);
+  }
+
   public async updateBalanceUserById(
     userId: number,
     params: Partial<User>,

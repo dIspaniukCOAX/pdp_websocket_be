@@ -30,7 +30,7 @@ export class BikesRepository {
     return this.repository.findOne({ where: { id } });
   }
 
-  public async updateByIdAndFind(
+  public async update(
     id: number,
     data: Partial<Bikes>,
   ): Promise<Bikes> {

@@ -23,7 +23,6 @@ export class EmailConsumer {
   @Process()
   async sendEmail(job: Job<RequestData>) {
     try {
-      console.log('job', job)
       await this.client.post('send', { version: 'v3.1' }).request(job.data);
     } catch (error) {
       this.logger.error(error);
