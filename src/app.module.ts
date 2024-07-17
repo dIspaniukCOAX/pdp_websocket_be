@@ -9,11 +9,9 @@ import { appConfig, databaseConfig, i18nConfig, i18nResolvers } from './config';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './modules/auth/guards/auth.guard';
 import { CacheModule } from './modules/cache/cache.module';
-import { UserModule } from './modules/user/user.module';
 import { EmailModule } from './modules/email/email.module';
-import { BikesModule } from 'modules/bikes/bikes.module';
-import { StripeModule } from './modules/stripe/stripe.module';
-import { TransactionModule } from './modules/transaction/transaction.module';
+import { UserModule } from './modules/user/user.module';
+import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
   imports: [
@@ -39,9 +37,7 @@ import { TransactionModule } from './modules/transaction/transaction.module';
     AuthModule,
     EmailModule,
     CacheModule,
-    BikesModule,
-    StripeModule,
-    TransactionModule,
+    ChatModule,
   ],
   providers: [
     {

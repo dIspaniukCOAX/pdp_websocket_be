@@ -3,6 +3,7 @@ import { I18nContext, I18nService } from 'nestjs-i18n';
 import { FindOptionsWhere } from 'typeorm';
 
 import { AuthHelper } from '../../auth/helpers/auth.helper';
+import { UpdateUser } from '../entities/updateUser.entity';
 import { User } from '../entities/user.entity';
 import { UserRepository } from '../repositories/user.repository';
 
@@ -58,16 +59,16 @@ export class UserService {
     return this.userRepository.findUserById(userId);
   }
 
-  async decreaseBalance(userId: number, amount: number): Promise<void> {
-    await this.userRepository.decrementBalance(userId, amount);
-  }
-
-  public async updateBalanceUserById(
+  public async updateUserById(
     userId: number,
-    params: Partial<User>,
+    params: Partial<UpdateUser>,
   ): Promise<User> {
-    const user = await this.userRepository.updateBalanceUserById(userId, params);
+    const user = await this.userRepository.updateUserById(userId, params);
 
     return user;
+  }
+
+  public async getAllUsers(userId: number): Promise<User[]> {
+    return this.userRepository.getAllUsers(userId);
   }
 }

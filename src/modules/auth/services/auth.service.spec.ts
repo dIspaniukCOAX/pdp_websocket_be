@@ -168,9 +168,7 @@ describe('AuthService', () => {
 
       const user = { id: faker.number.int(), email, password };
 
-      jest
-        .spyOn(userService, 'findUserByParams')
-        .mockResolvedValue(null);
+      jest.spyOn(userService, 'findUserByParams').mockResolvedValue(null);
       jest
         .spyOn(userService, 'createUser')
         .mockReturnValueOnce(registerDto as any);

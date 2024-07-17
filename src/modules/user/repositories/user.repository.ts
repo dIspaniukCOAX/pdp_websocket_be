@@ -1,6 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Repository } from 'typeorm';
 
+import { UpdateUser } from '../entities/updateUser.entity';
 import { User } from '../entities/user.entity';
 
 export class UserRepository {
@@ -39,21 +40,18 @@ export class UserRepository {
     });
   }
 
-  public async decrementBalance(userId: number, amount: number): Promise<void> {
-    await this.repository.decrement({ id: userId }, 'balance', amount);
+  public async updateUserById(
+    id: number,
+    user: Partial<UpdateUser>,
+  ): Promise<User> {
+    await this.repository.update(id, user);
+
+    return this.findUserById(id);
   }
 
-  public async updateBalanceUserById(
-    userId: number,
-    params: Partial<User>,
-  ): Promise<User> {
-    const user = await this.repository.findOneBy({ id: userId });
-    const balance = user.balance + params.balance;
+  public async getAllUsers(userId: number): Promise<User[]> {
+    const query = this.repository.createQueryBuilder('user').where('user.id != :userId', { userId });
 
-    await this.repository.update(userId, {
-      balance
-    });
-
-    return this.repository.findOneBy({ id: userId });
+    return query.getMany();
   }
 }

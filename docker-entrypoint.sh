@@ -3,8 +3,8 @@
 
 set -e
 
-echo "Waiting for postgres on ${POSTGRES_HOST}:${POSTGRES_PORT}..."
-while ! nc -z "$POSTGRES_HOST" "$POSTGRES_PORT"; do
+echo "Waiting for postgres on ${POSTGRES_chat}:${POSTGRES_PORT}..."
+while ! nc -z "$POSTGRES_chat" "$POSTGRES_PORT"; do
   sleep 0.1
 done
 echo "PostgreSQL started"

@@ -34,15 +34,15 @@ async function bootstrap() {
     origin:
       configService.get<string>('NODE_ENV') === 'production'
         ? configService
-            .get('WHITELISTED_ORIGINS', 'http://localhost:4200')
+            .get('WHITELISTED_ORIGINS', 'http://localchat:4200')
             .split(',')
         : '*',
   });
 
   const options = new DocumentBuilder()
-    .setTitle('Hosty API')
+    .setTitle('Chat app API')
     .setDescription(
-      'Hosty API is a RESTful API. It is built with NestJS, TypeORM, and PostgreSQL.',
+      'Chat app API is a RESTful API. It is built with NestJS, TypeORM, and PostgreSQL.',
     )
     .setVersion('1.0')
     .addBearerAuth()

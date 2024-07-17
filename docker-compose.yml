@@ -7,7 +7,7 @@ services:
       - '5445:5432'
     volumes:
       - db15:/var/lib/postgresql/data
-    container_name: rent_bike_db
+    container_name: chat_app_db
     environment:
       POSTGRES_USER: danylo
       POSTGRES_PASSWORD: admin123

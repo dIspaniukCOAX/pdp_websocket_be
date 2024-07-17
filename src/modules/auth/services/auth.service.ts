@@ -158,9 +158,7 @@ export class AuthService {
       });
     }
 
-    const user = await this.userService.findUserById(
-      Number(userIdFromCache),
-    );
+    const user = await this.userService.findUserById(Number(userIdFromCache));
 
     if (!user) {
       throw new BadRequestException({

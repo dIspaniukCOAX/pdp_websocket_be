@@ -32,7 +32,7 @@ import { AuthService } from '../services/auth.service';
 import { GoogleStrategy } from '../strategies/google.strategy';
 
 @ApiTags('auth')
-@Controller({ path: 'host/auth' })
+@Controller({ path: 'chat/auth' })
 export class AuthController {
   constructor(
     @Inject(AuthService)
