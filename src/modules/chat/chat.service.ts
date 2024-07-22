@@ -10,7 +10,7 @@ export class ChatService {
     return createMessageDto;
   }
 
-  findAllMessagesForUser(userId: string) {
+  findAllMessagesForUser(userId: number) {
     return this.messages.filter(
       (msg) => msg.senderId === userId || msg.receiverId === userId,
     );

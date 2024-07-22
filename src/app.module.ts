@@ -12,6 +12,7 @@ import { CacheModule } from './modules/cache/cache.module';
 import { EmailModule } from './modules/email/email.module';
 import { UserModule } from './modules/user/user.module';
 import { ChatModule } from './modules/chat/chat.module';
+import { AnalyticsModule } from './modules/analytics/analytics.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { ChatModule } from './modules/chat/chat.module';
     EmailModule,
     CacheModule,
     ChatModule,
+    AnalyticsModule,
   ],
   providers: [
     {
